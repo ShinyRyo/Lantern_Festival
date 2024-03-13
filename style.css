@@ -1,27 +1,34 @@
 body, html {
-  height: 100%;
-  margin: 0;
-  overflow: hidden;
-  background: #1a1a2e;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,12,60,1) 100%);
+}
+
+#lanterns {
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 
 .lantern {
-  position: absolute;
-  bottom: -100px; /* 初期位置を画面外に */
-  background: orange;
-  opacity: 0.8;
-  width: 50px;
-  height: 80px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px 2px #ffd700;
-  animation: floatUp 5s linear forwards, glow 2s infinite alternate;
+    position: absolute;
+    width: 20px;
+    height: 30px;
+    background: linear-gradient(180deg, rgba(255,140,0,1) 0%, rgba(255,69,0,1) 100%);
+    border-radius: 50% 50% 0 0;
+    bottom: 0;
+    box-shadow: 0 0 8px rgba(255,140,0,0.8);
+    animation: floatUp 20s ease-in forwards, glow 3s infinite ease-in-out;
 }
 
 @keyframes floatUp {
-  to { transform: translateY(-100vh); }
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-100vh); }
 }
 
 @keyframes glow {
-  from { opacity: 0.6; }
-  to { opacity: 1; }
+    0%, 100% { box-shadow: 0 0 8px rgba(255,140,0,0.8); }
+    50% { box-shadow: 0 0 20px rgba(255,140,0,1); }
 }
