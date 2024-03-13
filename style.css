@@ -1,84 +1,27 @@
 body, html {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,0,0,1) 100%);
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: #1a1a2e;
 }
 
 .lantern {
-    position: absolute;
-    width: 20px;
-    height: 35px;
-    background: linear-gradient(180deg, rgba(255,165,0,0.8) 0%, rgba(255,69,0,0.8) 100%);
-    opacity: 0.8;
-    border-radius: 50% 50% 0 0;
-    bottom: -60px;
-    box-shadow: 0 0 8px 2px rgba(255,165,0,0.9); /* 輝く効果 */
-    animation: floatUp 20s ease-in forwards, glow 3s infinite ease-in-out, sway 4s infinite ease-in-out;
-}
-
-.lantern::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 60px; /* 光のオーラのサイズを調整 */
-    height: 60px; /* 光のオーラのサイズを調整 */
-    background: radial-gradient(circle, rgba(255,165,0,0.8) 0%, rgba(255,69,0,0.0) 70%);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    z-index: -1;
-    box-shadow: 0 0 15px 10px rgba(255,165,0,0.5); /* 光がぼんやりと広がるように */
-}
-
-/* 星の追加 */
-.star {
-    position: absolute;
-    width: 2px;
-    height: 2px;
-    background-color: white;
-    border-radius: 50%;
-    animation: twinkle 1s infinite ease-in-out;
+  position: absolute;
+  bottom: -100px; /* 初期位置を画面外に */
+  background: orange;
+  opacity: 0.8;
+  width: 50px;
+  height: 80px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 2px #ffd700;
+  animation: floatUp 5s linear forwards, glow 2s infinite alternate;
 }
 
 @keyframes floatUp {
-    to {
-        transform: translateY(-120vh);
-    }
+  to { transform: translateY(-100vh); }
 }
 
 @keyframes glow {
-    0%, 100% {
-        opacity: 1;
-        box-shadow: 0 0 8px 2px rgba(255,165,0,0.9);
-    }
-    50% {
-        opacity: 0.6;
-        box-shadow: 0 0 15px 5px rgba(255,165,0,0.6);
-    }
-}
-
-@keyframes sway {
-    0%, 100% {
-        transform: translateX(0);
-    }
-    25% {
-        transform: translateX(-5px);
-    }
-    50% {
-        transform: translateX(5px);
-    }
-    75% {
-        transform: translateX(-5px);
-    }
-}
-
-@keyframes twinkle {
-    0%, 100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.5;
-    }
+  from { opacity: 0.6; }
+  to { opacity: 1; }
 }
