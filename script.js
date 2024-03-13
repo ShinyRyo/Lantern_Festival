@@ -45,3 +45,42 @@ function startLanternFestival() {
 }
 
 startLanternFestival();
+
+let startX, startY, endX, endY; // スワイプの始点と終点
+
+// スワイプの始点を記録
+function touchStart(event) {
+    startX = event.touches[0].clientX;
+    startY = event.touches[0].clientY;
+}
+
+// スワイプの終点を記録し、風の方向と強さを計算
+function touchEnd(event) {
+    endX = event.changedTouches[0].clientX;
+    endY = event.changedTouches[0].clientY;
+
+    // スワイプの方向（X,Y）と強さ（distanceX, distanceY）を計算
+    const distanceX = endX - startX;
+    const distanceY = endY - startY;
+
+    // ランタンに風の効果を適用
+    applyWindToLanterns(distanceX, distanceY);
+}
+
+// スワイプイベントリスナーを追加
+document.addEventListener('touchstart', touchStart);
+document.addEventListener('touchend', touchEnd);
+
+function applyWindToLanterns(distanceX, distanceY) {
+    // 全てのランタンを取得
+    const lanterns = document.querySelectorAll('.lantern');
+
+    // 各ランタンに対して風の効果を適用
+    lanterns.forEach(lantern => {
+        // スワイプの方向と距離に基づいて、ランタンの位置を調整
+        const currentTransform = lantern.style.transform;
+        const newX = parseInt(currentTransform.replace('translateX(', '').replace('vw)', '')) + distanceX / 10; // 風の強さを適用
+        const newY = parseInt(currentTransform.replace('translateY(', '').replace('vh)', '')) - distanceY / 10; // Y軸は画面の向きに合わせて調整
+        lantern.style.transform = `translateX(${newX}vw) translateY(${newY}vh)`;
+    });
+}
