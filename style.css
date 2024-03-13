@@ -3,22 +3,40 @@ body, html {
     height: 100%;
     margin: 0;
     overflow: hidden;
-    background-color: #000022;
+    background: radial-gradient(circle, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,0,0,1) 100%);
 }
 
 .lantern {
     position: absolute;
-    width: 30px;
-    height: 50px;
-    background-color: yellow;
+    width: 20px;
+    height: 35px;
+    background: linear-gradient(180deg, rgba(255,165,0,0.8) 0%, rgba(255,69,0,0.8) 100%);
     opacity: 0.8;
     border-radius: 50% 50% 0 0;
-    /* 初期位置を画面下部に設定 */
     bottom: -60px;
+    box-shadow: 0 0 8px 2px rgba(255,165,0,0.9); /* 輝く効果 */
+}
+
+/* 星の追加 */
+.star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background-color: white;
+    border-radius: 50%;
 }
 
 @keyframes floatUp {
     to {
-        transform: translateY(-120vh); /* 画面の高さ以上に移動 */
+        transform: translateY(-120vh);
+    }
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
     }
 }
