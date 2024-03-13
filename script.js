@@ -40,7 +40,7 @@ function createLanterns(numberOfLanterns) {
 // ランタン生成の間隔をより短く設定し、一度に生成するランタンの数を増やす
 function startLanternFestival() {
     setInterval(() => {
-        createLanterns(5); // 一度に5個のランタンを生成
+        createLanterns(2); // 一度に5個のランタンを生成
     }, 1000); // 1秒ごとにランタンを生成
 }
 
