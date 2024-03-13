@@ -1,32 +1,78 @@
-function createLanterns(number) {
-  const lanternArea = document.getElementById('lanternArea');
-  for (let i = 0; i < number; i++) {
-    const lantern = document.createElement('div');
-    lantern.className = 'lantern';
-    lantern.style.left = `${Math.random() * window.innerWidth}px`;
-    lanternArea.appendChild(lantern);
-  }
+// ランタンが浮かび上がる速度と方向を制御する変数
+let windX = 0; // 風のX方向（左右の動き）
+const sensitivity = 0.1; // ジャイロセンサーの感度調整
+
+// デバイスの傾きを取得し、風の方向を調整
+function handleOrientation(event) {
+    const gamma = event.gamma; // Z軸の傾き：左右の傾き
+    windX = gamma * sensitivity;
 }
 
-function startLanternFestival(interval, number) {
-  setInterval(() => createLanterns(number), interval);
+window.addEventListener('deviceorientation', handleOrientation);
+
+// ランタンを生成する関数
+function createLanterns(numberOfLanterns) {
+    for (let i = 0; i < numberOfLanterns; i++) {
+        const lantern = document.createElement('div');
+        lantern.classList.add('lantern');
+        lantern.style.left = `${Math.random() * 100}vw`;
+        document.getElementById('lanterns').appendChild(lantern);
+
+        const duration = 10 + Math.random() * 15;
+        lantern.style.animationDuration = `${duration}s`;
+
+        // アニメーションと初期位置設定
+        lantern.style.animationName = 'floatUp, glow';
+        lantern.style.animationTimingFunction = 'ease-in, ease-in-out';
+        lantern.style.animationIterationCount = 'forwards, infinite';
+        lantern.style.transform = `translateX(${windX}vw)`;
+
+        lantern.addEventListener('animationend', () => {
+            lantern.remove();
+        });
+    }
 }
 
-document.body.addEventListener('touchmove', function(e) {
-  const touchLocation = e.touches[0];
-  const swipeEffect = document.createElement('div');
-  swipeEffect.style.position = 'absolute';
-  swipeEffect.style.width = '100px';
-  swipeEffect.style.height = '100px';
-  swipeEffect.style.background = 'rgba(255, 255, 255, 0.5)';
-  swipeEffect.style.borderRadius = '50%';
-  swipeEffect.style.top = `${touchLocation.pageY - 50}px`;
-  swipeEffect.style.left = `${touchLocation.pageX - 50}px`;
-  document.body.appendChild(swipeEffect);
-  setTimeout(() => swipeEffect.remove(), 500);
-});
+// ランタン生成の間隔と数を調整する関数
+function startLanternFestival() {
+    setInterval(() => {
+        createLanterns(2); // 一度に2個のランタンを生成
+    }, 3000); // 3秒ごとにランタンを生成
+}
 
-startLanternFestival(3000, 5); // 3秒ごとに5つのランタンを生成
+startLanternFestival();
 
-// スワイプによるランタンの動きの実装は、このコードでは省略していますが、
-// touchmoveイベントで取得した座標情報を基に、ランタンの位置や動きを調整することで実現できます。
+// スワイプ操作の検出
+let startX, startY, endX, endY;
+
+function touchStart(event) {
+    startX = event.touches[0].clientX;
+    startY = event.touches[0].clientY;
+}
+
+function touchEnd(event) {
+    endX = event.changedTouches[0].clientX;
+    endY = event.changedTouches[0].clientY;
+
+    const distanceX = endX - startX;
+    const distanceY = endY - startY;
+
+    applyWindToLanterns(distanceX, distanceY);
+}
+
+document.addEventListener('touchstart', touchStart);
+document.addEventListener('touchend', touchEnd);
+
+// スワイプに応じてランタンに風の効果を適用する関数
+function applyWindToLanterns(distanceX, distanceY) {
+    const lanterns = document.querySelectorAll('.lantern');
+
+    lanterns.forEach(lantern => {
+        const styles = window.getComputedStyle(lantern);
+        const matrix = new WebKitCSSMatrix(styles.transform);
+        const newX = matrix.m41 + distanceX * 0.1;
+        const newY = matrix.m42 - distanceY * 0.1;
+
+        lantern.style.transform = `translate(${newX}px, ${newY}px)`;
+    });
+}
