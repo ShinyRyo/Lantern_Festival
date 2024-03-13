@@ -1,14 +1,17 @@
-// ランタンが浮かび上がる速度と方向を制御する変数
-let windX = 0; // 風のX方向（左右の動き）
-const sensitivity = 0.1; // ジャイロセンサーの感度調整
-
-// デバイスの傾きを取得し、風の方向を調整
-function handleOrientation(event) {
-    const gamma = event.gamma; // Z軸の傾き：左右の傾き
-    windX = gamma * sensitivity;
+function createStars(numberOfStars) {
+    for (let i = 0; i < numberOfStars; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        star.style.left = `${Math.random() * 100}vw`;
+        star.style.top = `${Math.random() * 100}vh`;
+        document.body.appendChild(star);
+    }
 }
 
-window.addEventListener('deviceorientation', handleOrientation);
+// 例えば、画面を読み込んだ後に50個の星を生成する
+document.addEventListener('DOMContentLoaded', () => {
+    createStars(50);
+});
 
 // ランタンを生成する関数
 function createLanterns(numberOfLanterns) {
