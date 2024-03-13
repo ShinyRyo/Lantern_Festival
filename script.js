@@ -72,15 +72,15 @@ document.addEventListener('touchstart', touchStart);
 document.addEventListener('touchend', touchEnd);
 
 function applyWindToLanterns(distanceX, distanceY) {
-    // 全てのランタンを取得
     const lanterns = document.querySelectorAll('.lantern');
 
-    // 各ランタンに対して風の効果を適用
     lanterns.forEach(lantern => {
-        // スワイプの方向と距離に基づいて、ランタンの位置を調整
-        const currentTransform = lantern.style.transform;
-        const newX = parseInt(currentTransform.replace('translateX(', '').replace('vw)', '')) + distanceX / 10; // 風の強さを適用
-        const newY = parseInt(currentTransform.replace('translateY(', '').replace('vh)', '')) - distanceY / 10; // Y軸は画面の向きに合わせて調整
-        lantern.style.transform = `translateX(${newX}vw) translateY(${newY}vh)`;
+        // 既存のtransformを取得して、新しい値を計算する
+        const styles = window.getComputedStyle(lantern);
+        const matrix = new WebKitCSSMatrix(styles.transform);
+        const newX = matrix.m41 + distanceX * 0.1; // X軸の移動距離を加算
+        const newY = matrix.m42 - distanceY * 0.1; // Y軸の移動距離を減算（画面上方向への移動を反映）
+
+        lantern.style.transform = `translate(${newX}px, ${newY}px)`;
     });
 }
