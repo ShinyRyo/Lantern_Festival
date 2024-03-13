@@ -36,7 +36,7 @@ function createLanterns(numberOfLanterns) {
 // ランタン生成の間隔と数を調整する関数
 function startLanternFestival() {
     setInterval(() => {
-        createLanterns(2); // 一度に2個のランタンを生成
+        createLanterns(5); // 一度に2個のランタンを生成
     }, 3000); // 3秒ごとにランタンを生成
 }
 
