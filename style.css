@@ -15,7 +15,7 @@ body, html {
     border-radius: 50% 50% 0 0;
     bottom: -60px;
     box-shadow: 0 0 8px 2px rgba(255,165,0,0.9); /* 輝く効果 */
-    animation: floatUp 20s ease-in forwards, glow 3s infinite ease-in-out;
+    animation: floatUp 20s ease-in forwards, glow 3s infinite ease-in-out, sway 4s infinite ease-in-out;
 }
 
 /* 星の追加 */
@@ -25,11 +25,38 @@ body, html {
     height: 2px;
     background-color: white;
     border-radius: 50%;
+    animation: twinkle 1s infinite ease-in-out;
 }
 
 @keyframes floatUp {
     to {
         transform: translateY(-120vh);
+    }
+}
+
+@keyframes glow {
+    0%, 100% {
+        opacity: 1;
+        box-shadow: 0 0 8px 2px rgba(255,165,0,0.9);
+    }
+    50% {
+        opacity: 0.6;
+        box-shadow: 0 0 15px 5px rgba(255,165,0,0.6);
+    }
+}
+
+@keyframes sway {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    50% {
+        transform: translateX(5px);
+    }
+    75% {
+        transform: translateX(-5px);
     }
 }
 
@@ -39,17 +66,5 @@ body, html {
     }
     50% {
         opacity: 0.5;
-    }
-}
-
-/* ランタンがぼんやりと光る効果 */
-@keyframes glow {
-    0%, 100% {
-        opacity: 1;
-        box-shadow: 0 0 8px 2px rgba(255,165,0,0.9);
-    }
-    50% {
-        opacity: 0.6;
-        box-shadow: 0 0 15px 5px rgba(255,165,0,0.6);
     }
 }
