@@ -1,0 +1,24 @@
+body, html {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background-color: #000022;
+}
+
+.lantern {
+    position: absolute;
+    width: 30px;
+    height: 50px;
+    background-color: yellow;
+    opacity: 0.8;
+    border-radius: 50% 50% 0 0;
+    /* 初期位置を画面下部に設定 */
+    bottom: -60px;
+}
+
+@keyframes floatUp {
+    to {
+        transform: translateY(-120vh); /* 画面の高さ以上に移動 */
+    }
+}
